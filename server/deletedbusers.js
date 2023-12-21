@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import connectDB from "./db/connect.js";
 import { User } from "./model/User.js";
+
 async function deleteUsers() {
     try {
         await connectDB("mongodb+srv://armen:jhonsmith4067@nodeexpressprojects.yklcopn.mongodb.net/auth?retryWrites=true&w=majority");
@@ -11,3 +12,5 @@ async function deleteUsers() {
         throw new Error(err)
     }
 }
+
+// deleteUsers();

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./Login.scss";
+import FormInputs from "../form-inputs/FormInputs";
 
 const Login = () => {
   const emailRef = useRef(null);
@@ -27,7 +28,6 @@ const Login = () => {
       });
       const data = await resp.json();
       if (data.msg.includes("email")) {
-        // return setEmailErr(data.msg);
         return setError((prev) => {
           return {
             ...prev,
@@ -51,57 +51,43 @@ const Login = () => {
       console.error(err);
     }
   };
+
+  const setErrorsToDefault = () => {
+    setError(() => {
+      return {
+        email_err: "",
+        pass_err: "",
+      };
+    });
+  };
+
   return (
-    <div className="login">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="login-email">
-          <label>Email</label>
-          <input
-            type="email"
-            required
-            name="email"
-            ref={emailRef}
-            onFocus={() => {
-              setError((prev) => {
-                return {
-                  ...prev,
-                  email_err: "",
-                };
-              });
-            }}
-            className={err.email_err ? `error` : ``}
+    <div className="login-wrapper">
+      <div className="login">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <FormInputs
+            name={"email"}
+            type={"email"}
+            reference={emailRef}
+            errorHandler={setErrorsToDefault}
+            errorType={err.email_err}
           />
-          {err.email_err && (
-            <span style={{ color: "red" }}>{err.email_err}</span>
-          )}
-        </div>
-        <div className="login-password">
-          <label>Password</label>
-          <input
-            type="password"
-            required
-            name="password"
-            ref={passRef}
-            onFocus={() => {
-              setError((prev) => {
-                return {
-                  ...prev,
-                  pass_err: "",
-                };
-              });
-            }}
-            className={err.pass_err ? `error` : ``}
+          <FormInputs
+            name={"password"}
+            type={"password"}
+            reference={passRef}
+            errorHandler={setErrorsToDefault}
+            errorType={err.pass_err}
           />
-          {err.pass_err && <span style={{ color: "red" }}>{err.pass_err}</span>}
-        </div>
-        <button type="submit">Login</button>
-        <div className="login-register">
-          <span>
-            Don't have an account ? <Link to="/register">Sign up</Link>
-          </span>
-        </div>
-      </form>
+          <button type="submit">Login</button>
+          <div className="login-register">
+            <span>
+              Don't have an account ? <Link to="/register">Sign up</Link>
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,20 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./components/login/Login.jsx";
-import Register from "./components/register/Register.jsx";
-import { useLocation, useNavigate, redirect } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Home from "./components/home/Home.jsx";
+
+import HomePage from "./pages/HomePage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+
+import { ROUTER } from "./router/router.js";
+
+import "./App.css";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 function App() {
   const nav = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     if (location.pathname === "/" && !localStorage.getItem("token")) {
       nav("/register", { replace: true });
@@ -17,13 +23,14 @@ function App() {
       nav("/home", { replace: true });
     }
   }, [location.pathname]);
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<div>Error</div>} />
+        <Route path={ROUTER.HOME_PAGE_ROUTE} element={<HomePage />} />
+        <Route path={ROUTER.REGISTER_PAGE_ROUTE} element={<RegisterPage />} />
+        <Route path={ROUTER.LOGIN_PAGE_ROUTE} element={<LoginPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );

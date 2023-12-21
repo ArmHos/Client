@@ -8,4 +8,5 @@ async function connectDB(url) {
         throw new Error(err);
     }
 }
+
 export default connectDB;

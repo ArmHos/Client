@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import "./Home.scss";
+
 const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,9 +35,11 @@ const Home = () => {
     navigate("/login");
   };
   return (
-    <div>
-      <h1>Welcome</h1>
-      <button onClick={logOut}>Log Out</button>
+    <div className="home">
+      <div className="home-content">
+        <h1>Hello and Welcome</h1>
+        <button onClick={logOut}>Log Out</button>
+      </div>
     </div>
   );
 };
